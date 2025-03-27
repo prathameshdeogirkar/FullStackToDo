@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Appbtn = ({title="your tittle",veriant="simple_Pink",onClick}) => {
+const Appbtn = ({title="your tittle ",veriant="simple_Pink",onClick}) => {
 
  let veriants = {
      simple_Blue:'bg-blue-500 hover:bg-blue-700',
