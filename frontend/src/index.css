@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: mainFont;
+    src: url(./assets/font.TTF);
+}
 
 .myShadow{
     box-shadow: 7px 7px 2px black;
     border: black 1px solid;
     color: black;
+}
+
+.mainFont{
+  font-family: mainFont;
 }
