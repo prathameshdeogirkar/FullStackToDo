@@ -3,10 +3,12 @@ const app = express()
 const PORT = 3000
 import dotenv from "dotenv"
 dotenv.config()
+import jwt from "jsonwebtoken";
 
 //configs and utils 
 import responder from "./utils/utils.js"
 import connectDb from "./config/connectDB.js"
+
 
 
 //controllers
@@ -27,6 +29,29 @@ import connectDb from "./config/connectDB.js"
 app.post('/addtodo',addTodo)
 app.post('/signup', postSignUp)
 app.post('/login', postLogin)
+app.get('/test', (req, res) => {
+    const token = req.headers.authorization;
+
+    if (!token) {
+        return res.status(401).json({
+            message: 'Unauthorized',
+            success: false
+        });
+    }
+
+    const tokenValue = token.split(" ")[1]; 
+
+    try {
+        const decoded = jwt.verify(tokenValue, process.env.SECRET_KEY);
+
+        if (decoded) {
+            return res.json({ message: 'Authorized', success: true, data: decoded });
+        }
+    } catch (e) {
+        return res.status(401).json({ message: 'Unauthorized', success: false });
+    }
+});
+
 
 
 
