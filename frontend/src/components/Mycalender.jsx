@@ -22,18 +22,18 @@ const MyCalendar = () => {
   };
 
   return (
-    <div className="h-[100vh] w-[70vw]">
+    <div className="h-[100vh] w-[60vw] text-2xl bg-amber-300 border-4 border-black">
       <Calendar
         localizer={localizer}
         startAccessor="start"
         endAccessor="end"
         view="month"
         onSelectSlot={handleSelectSlot}
-        selectable // Enable date selection
-        events={events} // Pass the events state
+        selectable 
+        events={events} 
         className="rbc-calendar"
           components={{
-          toolbar: () => null, // Hide the toolbar
+          toolbar: () => null, 
         }}
       />
     </div>
