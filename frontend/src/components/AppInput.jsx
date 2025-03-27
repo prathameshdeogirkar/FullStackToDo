@@ -2,8 +2,8 @@ import React from 'react'
 
 const AppInput = ({placeholder,}) => {
   return (
-    <input placeholder={placeholder}  className='h-5 p-4  border-4 shadow-black shadow-md '/>
+    <input placeholder={placeholder}  className='h-5 p-4 outline-none myShadow text-black  '/>
   )
 }
 
-export default AppInput
+export default AppInput 

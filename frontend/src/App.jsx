@@ -1,10 +1,8 @@
 import React from 'react'
 import "./index.css"
-
-
-import AppInput from './components/AppInput'
-
+import Mycalender from './components/Mycalender'
 import Signup from './components/Signup'
+
 
 
 const App = () => {
@@ -16,7 +14,8 @@ const App = () => {
           
 
  
-         <Signup/>  
+         {/* <Signup/>   */}
+         
         </div>
   )
 }
