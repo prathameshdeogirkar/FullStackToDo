@@ -53,8 +53,12 @@ const postSignUp = async(req,res)=>{
          })
      }
     };
+
+
+
 const postLogin = async(req,res)=>{
     const {userName ,email, password} = req.body;
+
     if(!email ||!password || !userName ){
          return res.status(403).json({
               message: "Email,password and Username are required",
@@ -62,7 +66,38 @@ const postLogin = async(req,res)=>{
          })  ;
     }
 
-}
+    const user = await User.findOne({email});
+
+    if(!user){
+         return res.status(404).json({
+              message: "User not found Please Sign Up first before Logging in",
+              success: false
+         })  ;
+    }
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if(isMatch){
+        return res.status(200).json({
+             message: "Logged In successfully",
+             success: true,
+             data:{
+              userName : user.userName,
+              email : user.email,
+              password : user.password,
+              data:{
+                myTodos:user.myTodos
+              }
+               }
+            });
+            }
+               else{
+                return res.status(401).json({
+                  message: "Invalid Credentials",
+                  success: false
+                 });
+ 
+               }
+    }
+
      export {
         postSignUp,
         postLogin
