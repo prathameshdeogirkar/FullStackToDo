@@ -9,6 +9,11 @@ const userSchema = new Schema({
         type:String,
         required:true
     },
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
     myTodos:[{
         type:Schema.Types.ObjectId,
         ref:"Todo"

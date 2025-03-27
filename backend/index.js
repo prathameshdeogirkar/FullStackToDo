@@ -8,8 +8,10 @@ dotenv.config()
 import responder from "./utils/utils.js"
 import connectDb from "./config/connectDB.js"
 
+
 //controllers
  import {addTodo} from "./controllers/controlTodos.js"
+ import { postSignUp } from "./controllers/user.js"
 
 
  // middlewares
@@ -23,6 +25,8 @@ import connectDb from "./config/connectDB.js"
 //end points
 
 app.post('/addtodo',addTodo)
+
+app.post('/signup', postSignUp)
 
 
 
