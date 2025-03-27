@@ -24,6 +24,10 @@ import connectDb from "./config/connectDB.js"
 
 app.post('/addtodo',addTodo)
 
+app.post('/signup', async(req,res)=>{
+
+})
+
 
 
 
