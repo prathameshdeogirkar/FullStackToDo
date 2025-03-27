@@ -8,8 +8,10 @@ dotenv.config()
 import responder from "./utils/utils.js"
 import connectDb from "./config/connectDB.js"
 
+
 //controllers
  import {addTodo} from "./controllers/controlTodos.js"
+ import { postSignUp } from "./controllers/user.js"
 
 
  // middlewares
@@ -24,29 +26,7 @@ import connectDb from "./config/connectDB.js"
 
 app.post('/addtodo',addTodo)
 
-app.post('/signup', async(req,res)=>{
-
-     const {username, password, email, repassword} =  req.body;
-     if (password !== repassword) {
-          return res.status(400).json({
-               message: "Passwords do not match",
-               success: false
-          })
-     }
-
-     if(!username){
-          return res.status(403).json({
-               message: "Username is required",
-               success: false
-          })
-     }
-     if(!email){
-          return res.status(403).json({
-               message: "Email is required",
-               success: false
-          }) ;
-         }
-})
+app.post('/signup', postSignUp)
 
 
 
