@@ -26,6 +26,26 @@ app.post('/addtodo',addTodo)
 
 app.post('/signup', async(req,res)=>{
 
+     const {username, password, email, repassword} =  req.body;
+     if (password !== repassword) {
+          return res.status(400).json({
+               message: "Passwords do not match",
+               success: false
+          })
+     }
+
+     if(!username){
+          return res.status(403).json({
+               message: "Username is required",
+               success: false
+          })
+     }
+     if(!email){
+          return res.status(403).json({
+               message: "Email is required",
+               success: false
+          }) ;
+         }
 })
 
 
