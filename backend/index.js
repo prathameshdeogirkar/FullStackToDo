@@ -1,6 +1,8 @@
 import express from "express"
 const app = express()
 const PORT = 3000
+import dotenv from "dotenv"
+dotenv.config()
 
 //configs and utils 
 import responder from "./utils/utils.js"
