@@ -12,7 +12,7 @@ const Appbtn = ({title="your tittle ",veriant="simple_Pink",onClick}) => {
  }
 
   return (
-         <button className={`text-2xl font-bold ${veriants[veriant]} w-full h-full`}>{title}</button>
+         <button className={`text-2xl font-bold ${veriants[veriant]} w-full h-full myShadow`}>{title}</button>
   )
 }
 
