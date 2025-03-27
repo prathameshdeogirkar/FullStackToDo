@@ -52,5 +52,18 @@ const postSignUp = async(req,res)=>{
                success: false
          })
      }
+    };
+const postLogin = async(req,res)=>{
+    const {userName ,email, password} = req.body;
+    if(!email ||!password || !userName ){
+         return res.status(403).json({
+              message: "Email,password and Username are required",
+              success: false
+         })  ;
     }
-     export {postSignUp}
+
+}
+     export {
+        postSignUp,
+        postLogin
+     }
