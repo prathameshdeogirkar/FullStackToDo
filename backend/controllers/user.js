@@ -14,7 +14,7 @@ const postSignUp = async(req,res)=>{
     }
     if(!email){
      return responder(res,'Email is required',null,400,false)
-        }
+      }
         const salt = bcrypt.genSaltSync(10);
         try{
         const newUser =  new User({
@@ -24,19 +24,9 @@ const postSignUp = async(req,res)=>{
         });
         const savedUser = await newUser.save()
 
-        return res.status(201).json({
-             message: "User signedup successfully",
-             success: true,
-             data:{
-              userName : savedUser.userName,
-              email : savedUser.email,
-             }
-        });
+        return responder(res,'User created successfully',null,201,true);
      } catch(err){
-         return res.status(400).json({
-               message: err.message,
-               success: false
-         })
+         return responder(res,err.message,null,500,false);
      }
     };
 const postLogin = async(req,res)=>{
@@ -55,25 +45,15 @@ const postLogin = async(req,res)=>{
     if(isMatch){
         const token = jwt.sign({email: user.email}, process.env.SECRET_KEY);
         res.setHeader("Authorization", `Bearer ${token}`);
-        return res.status(200).json({
-             message: "Logged In successfully",
-             success: true,
-             token: token,
-             data:{
-              userName : user.userName,
-              email : user.email,
-              password : user.password,
-              data:{
-                myTodos:user.myTodos
-              }
-               }
-            });
+        let userInfo = {
+            userName: user.userName,
+            email: user.email,
+            _id: user._id
+        }
+        return responder(res, 'User logged in successfully',{token,userInfo},200,true);
             }
                else{
-                return res.status(401).json({
-                  message: "Invalid Credentials",
-                  success: false
-                 });
+                return responder(res,'Invalid credentials',null,403,false);
  
                }
     }
