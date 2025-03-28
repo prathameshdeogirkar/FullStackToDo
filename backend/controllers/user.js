@@ -4,32 +4,16 @@ import jwt from "jsonwebtoken";
 import responder from "../utils/utils.js";
 const postSignUp = async(req,res)=>{
 
-    const {userName, email, password, repassword} =  req.body;
+    const {userName, email, password} =  req.body;
 
     if(!password){
-         return res.status(403).json({
-              message: "Password is required",
-              success: false
-         })  ;
+     return responder(res,'Password is required',null,403,false)
     }
-    if (password !== repassword) {
-         return res.status(400).json({
-              message: "Passwords do not match",
-              success: false
-         })
-    }
-
     if(!userName){
-         return res.status(403).json({
-              message: "Username is required",
-              success: false
-         })
+         return responder(res,'UserName is required',null,403,false)
     }
     if(!email){
-         return res.status(403).json({
-              message: "Email is required",
-              success: false
-         }) ;
+     return responder(res,'Email is required',null,403,false)
         }
         const salt = bcrypt.genSaltSync(10);
         try{
