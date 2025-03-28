@@ -7,13 +7,13 @@ const postSignUp = async(req,res)=>{
     const {userName, email, password} =  req.body;
 
     if(!password){
-     return responder(res,'Password is required',null,403,false)
+     return responder(res,'Password is required',null,400,false)
     }
     if(!userName){
-         return responder(res,'UserName is required',null,403,false)
+         return responder(res,'UserName is required',null,400,false)
     }
     if(!email){
-     return responder(res,'Email is required',null,403,false)
+     return responder(res,'Email is required',null,400,false)
         }
         const salt = bcrypt.genSaltSync(10);
         try{
