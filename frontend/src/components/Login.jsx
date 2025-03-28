@@ -18,6 +18,9 @@ const Login = () => {
           email,
           password
         })
+
+        console.log(response.data)
+
         if(!response.data?.status){
            toast(response.data?.message)
         }

@@ -39,7 +39,7 @@ const postLogin = async(req,res)=>{
     const user = await User.findOne({email});
 
     if(!user){
-         return responder(res,'',null,404,false);
+         return responder(res,'user not found please login ',null,404,false);
     }
     const isMatch = bcrypt.compareSync(password, user.password);
     if(isMatch){

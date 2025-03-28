@@ -21,7 +21,7 @@ import connectDb from "./config/connectDB.js"
 
 
  // middlewares
- app.use(express.json())
+ app.use(express.json()) 
  app.use(express.urlencoded({extended:true}))
  const jwtverifyMiddleware = async(req, res , next) => {
      const token = req.headers.authorization.split(" ")[1];
