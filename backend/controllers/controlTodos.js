@@ -3,16 +3,17 @@ import Todo from "../models/TodoModel.js"
 import User from "../models/UserModel.js"
 
 const addTodo = async (req, res) => {
+    console.log("hiii")
     try {
-        let { date, title, description, addedTime } = req.body;
+        let { date, title, description, } = req.body;
         const userId = req.user.id; 
 
-        if (!date || !title || !description || !addedTime) {
+        if (!date || !title || !description ) {
             return responder(res, "All fields are required", null, 400, false);
         }
 
       
-        const newTodo = new Todo({ date, title, description, addedTime, user: userId });
+        const newTodo = new Todo({ date, title, description, user: userId });
         const savedTodo = await newTodo.save();
 
         if (!savedTodo) {
@@ -83,7 +84,22 @@ const updateTodoStatus = async (req, res) => {
 }
 
 
+const getuserTodos = async (req, res) => {
+    try {
+        const userId = req.user.id; 
+
+        const user = await User.findById(userId).populate("myTodos");
+
+        if (!user) {
+            return responder(res, "User not found", null, 404, false);
+        }
+
+        return responder(res, "User todos fetched successfully", user.myTodos, 200, true);
+    } catch (error) {
+        return responder(res, error.message, null, 500, false);}}
 
 
 
-export { addTodo, deleteTodo ,updateTodoStatus}
+
+
+export { addTodo, deleteTodo ,updateTodoStatus, getuserTodos }
