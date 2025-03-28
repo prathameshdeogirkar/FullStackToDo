@@ -4,6 +4,7 @@ import Mycalender from './components/Mycalender'
 import Signup from './components/Signup'
 import 'remixicon/fonts/remixicon.css'
 import Login from './components/Login'
+import UserIcon from './components/UserIcon'
 
 const App = () => {
   return (
@@ -11,8 +12,8 @@ const App = () => {
           <Mycalender/>
  
          {/* <Signup/>   */}
-
-         <Login/>
+        
+         {/* <Login/> */}
         </div>
   )
 }
