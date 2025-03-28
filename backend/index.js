@@ -50,11 +50,6 @@ app.post('/addtodo',addTodo)
 app.post('/signup', postSignUp)
 app.post('/login', postLogin)
 
-
-
-
-
-
 app.get("/health",(req,res)=>{
      responder(res,"server is healthy",null,200,true)
 })

@@ -54,9 +54,6 @@ const postSignUp = async(req,res)=>{
          })
      }
     };
-
-
-
 const postLogin = async(req,res)=>{
     const {userName ,email, password} = req.body;
 
