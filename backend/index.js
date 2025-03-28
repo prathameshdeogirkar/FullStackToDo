@@ -16,24 +16,23 @@ import connectDb from "./config/connectDB.js"
 
 
 //controllers
- import {addTodo} from "./controllers/controlTodos.js"
+ import {addTodo ,getuserTodos} from "./controllers/controlTodos.js"
  import { postSignUp , postLogin} from "./controllers/user.js"
 
 
  // middlewares
  app.use(express.json()) 
  app.use(express.urlencoded({extended:true}))
+
  const jwtverifyMiddleware = async(req, res , next) => {
+//req.headers.authorization.split(" ")[1]
      const token = req.headers.authorization.split(" ")[1];
      if (!token) {
-          return res.status(401).json({
-             message: 'jwttoken not found',
-             success: false
-         });
+          return responder(res, 'jwt token is required', null, 401, false);
      }
      try {
          const decoded = await jwt.verify(token, process.env.SECRET_KEY);
-         req.user = decoded;
+         req.user = decoded; 
           next();
      }
      catch (error) {
@@ -49,9 +48,10 @@ import connectDb from "./config/connectDB.js"
 
 //end points
 
-app.post('/addtodo',addTodo)
+app.post('/addtodo',jwtverifyMiddleware,addTodo)
 app.post('/signup', postSignUp)
 app.post('/login', postLogin)
+app.get('/gettodos',jwtverifyMiddleware,getuserTodos)
 
 app.get("/health",(req,res)=>{
      responder(res,"server is healthy",null,200,true)

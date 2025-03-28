@@ -17,10 +17,6 @@ const  todoSchema = new Schema({
          type:Boolean,
          default:false
      },
-     addedTime:{
-        type:String,
-        required:true
-     },
      user:{
         type:Schema.Types.ObjectId,ref:"User"
      }

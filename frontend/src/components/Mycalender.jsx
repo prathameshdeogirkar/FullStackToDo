@@ -2,23 +2,24 @@ import React, { useState } from 'react';
 import { Calendar, dayjsLocalizer } from 'react-big-calendar';
 import dayjs from 'dayjs';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import Addtask from './Addtask';
+
 
 const localizer = dayjsLocalizer(dayjs);
 
 const MyCalendar = () => {
-  const [events, setEvents] = useState([]); // State to store events
+  const [events, setEvents] = useState([]); 
+  const [showcompo, setShowcompo] = useState(false);
+  const [startdate, setStartdate] = useState('');
 
-  const handleSelectSlot = ({ start, end }) => {
-    const title = prompt('Enter event title:');
-    if (title) {
-      setEvents([
-        {
-          title: events.length+1 ,
-          start,
-          end,
-        },
-      ]);
-    }
+  const handleSelectSlot = ({ start }) => {
+    if (!start) return; 
+
+    const formattedDate = dayjs(start).format('YYYY-MM-DD'); // Convert to readable format
+    console.log('Selected Date:', formattedDate);
+    setStartdate(formattedDate);
+
+    setShowcompo(true); 
   };
 
   return (
@@ -28,14 +29,25 @@ const MyCalendar = () => {
         startAccessor="start"
         endAccessor="end"
         view="month"
+        selectable
+        events={events}
         onSelectSlot={handleSelectSlot}
-        selectable 
-        events={events} 
+        
+        
         className="rbc-calendar"
-          components={{
+        components={{
           toolbar: () => null, 
         }}
       />
+
+      {showcompo && (
+        <Addtask
+          setShowcompo={setShowcompo}
+          setEvents={setEvents}
+          events={events}
+          startdate={startdate}
+        />
+      )}
     </div>
   );
 };
