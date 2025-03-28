@@ -12,13 +12,13 @@ const App = () => {
         <div className='flex '>
           <Mycalender/>
  
-         {/* <Signup/>   */}
+         <Signup/>  
         
-         <Login/>
+         {/* <Login/> */}
 
-         <ToastContainer 
+         {/* <ToastContainer 
           position="bottom-left"
-         />
+         /> */}
         </div>
   )
 }
