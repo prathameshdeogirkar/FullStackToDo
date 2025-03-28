@@ -6,39 +6,27 @@ import Appinput from './Appinput';
 import Appbtn from './Appbtn';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    userName: '',
-    email: '',
-    password: '',
-  });
 
-  // Handle input changes
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  const [email,setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  
 
-  // Handle Login
-  const handleLogin = async () => {
-    if (!formData.userName || !formData.email || !formData.password) {
-      toast.error('All fields are required!');
-      return;
-    }
+  const handleLogin = async ()=>{
 
-    try {
-      const response = await axios.post('http://localhost:5000/api/login', formData);
-      console.log('Login Successful:', response.data);
-
-      // Store token in localStorage
-      localStorage.setItem('token', response.data.token);
-
-      toast.success('Login Successful!');
-      setTimeout(() => {
-        navigate('/dashboard'); // Redirect to dashboard
-      }, 1500);
-    } catch (err) {
-      toast.error(err.response?.data?.message || 'Login failed');
-    }
-  };
+     try {
+        let  response = await axios.post(`http://localhost:3000/login`,{
+          email,
+          password
+        })
+        if(!response.data?.status){
+           toast(response.data?.message)
+        }
+        else{
+          toast(response.data?.message)
+        }
+     } catch (error) {
+     }
+  }
 
   return (
     <div className='h-screen w-screen absolute top-0 left-0 backdrop-blur-2xl z-30 flex items-center justify-center'>
@@ -49,11 +37,11 @@ const Login = () => {
           <h1 className='text-4xl font-bold text-center mt-3 mainFont'>Login</h1>
 
           <div className='h-14 w-[70%]'>
-            <Appinput name="userName" placeholder="Enter username" onChange={(e)=>handleChange(e)} />
+            <Appinput name="userName" placeholder="Enter username" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
           </div>
 
           <div className='h-14 w-[70%]'>
-            <Appinput name="password" type="password" placeholder="Enter password" onChange={(e)=>handleChange(e)} />
+            <Appinput name="password" type="password" placeholder="Enter password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
           </div>
 
           <div className='h-14 w-[70%]'>
@@ -62,7 +50,7 @@ const Login = () => {
 
           <span className='flex items-start text-sm sm:text-xl text-gray-600 cursor-pointer w-[70%] block'>
             Don't Have an Account?
-            <span className='text-blue-600 block ml-2 cursor-pointer' onClick={() => navigate('/signup')}>
+            <span className='text-blue-600 block ml-2 cursor-pointer'>
               Sign Up <i className="ri-arrow-right-line"></i>
             </span>
           </span>

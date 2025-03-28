@@ -5,6 +5,7 @@ import Signup from './components/Signup'
 import 'remixicon/fonts/remixicon.css'
 import Login from './components/Login'
 import UserIcon from './components/UserIcon'
+import { ToastContainer } from 'react-toastify';
 
 const App = () => {
   return (
@@ -13,7 +14,11 @@ const App = () => {
  
          {/* <Signup/>   */}
         
-         {/* <Login/> */}
+         <Login/>
+
+         <ToastContainer 
+          position="bottom-left"
+         />
         </div>
   )
 }

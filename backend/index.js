@@ -4,6 +4,10 @@ const PORT = 3000
 import dotenv from "dotenv"
 dotenv.config()
 import jwt from "jsonwebtoken";
+import cors from "cors"
+app.use(cors({
+    origin: "*"
+}))
 
 //configs and utils 
 import responder from "./utils/utils.js"
@@ -17,7 +21,6 @@ import connectDb from "./config/connectDB.js"
 
 
  // middlewares
-
  app.use(express.json())
  app.use(express.urlencoded({extended:true}))
  const jwtverifyMiddleware = async(req, res , next) => {
