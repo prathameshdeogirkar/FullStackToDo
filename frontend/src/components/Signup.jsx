@@ -5,7 +5,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 
 
-const Signup = () => {
+const Signup = ({setShowcompo}) => {
 
   const [userinfo, setUserinfo] = useState({
     userName: '',
@@ -18,7 +18,7 @@ const Signup = () => {
     try {
       if(!userinfo.userName || !userinfo.email || !userinfo.password)
       {
-        console.log('All fields are required')
+        toast('All fields are required')
         return
       }
       const response =await axios.post('http://localhost:3000/signup', { userName: userinfo.userName, email: userinfo.email, password: userinfo.password })
@@ -26,6 +26,7 @@ const Signup = () => {
       console.log(response.data)
       if (response.data.success) {
         toast(response.data?.message)
+        setShowcompo(false)
       }
       else {
         toast(response.data?.message)
@@ -37,6 +38,8 @@ const Signup = () => {
 
 
   }
+
+
 
   return (
     <div className='h-screen w-screen absolute top-0 left-0 backdrop-blur-2xl z-30 flex items-center justify-center'>
@@ -82,7 +85,7 @@ const Signup = () => {
             />
           </div>
 
-          <span className='flex items-start text-sm sm:text-xl text-gray-600 cursor-pointer w-[70%] block '>dont have an account ? <span className='text-blue-600 block ml-2'> log in <i className="ri-arrow-right-line"></i></span></span>
+          <span className='flex items-start text-sm sm:text-xl text-gray-600 cursor-pointer w-[70%] block ' onClick={()=>{setShowcompo(false)}}>dont have an account ? <span className='text-blue-600 block ml-2'> log in <i className="ri-arrow-right-line"></i></span></span>
         </div>
       </div>
     </div>

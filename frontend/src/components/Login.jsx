@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Appinput from './Appinput';
 import Appbtn from './Appbtn';
 
-const Login = () => {
+const Login = ({setShowcompo,setAuthComp}) => {
 
   const [email,setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,6 +26,9 @@ const Login = () => {
         }
         else{
           toast(response.data?.message)
+          localStorage.setItem('allInfo',JSON.stringify(response.data?.data))
+          setShowcompo(false)
+          setAuthComp(false)
         }
      } catch (error) {
      }
@@ -51,7 +54,7 @@ const Login = () => {
             <Appbtn title='Log In' veriant='simple_Yellow' onClick={handleLogin} />
           </div>
 
-          <span className='flex items-start text-sm sm:text-xl text-gray-600 cursor-pointer w-[70%] block'>
+          <span className='flex items-start text-sm sm:text-xl text-gray-600 cursor-pointer w-[70%] block' onClick={()=>{setShowcompo(true)}}>
             Don't Have an Account?
             <span className='text-blue-600 block ml-2 cursor-pointer'>
               Sign Up <i className="ri-arrow-right-line"></i>
