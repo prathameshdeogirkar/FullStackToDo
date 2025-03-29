@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { loaddToken } from '../utiles.js';
 
-const GetuserTodos = ({ setShowcompo }) => {
+const ShowTodos = ({ setShowcompo }) => {
   const [tasks, setTasks] = useState([]);
   const token = loaddToken(); // Load user token
 
@@ -54,4 +54,4 @@ const GetuserTodos = ({ setShowcompo }) => {
   );
 };
 
-export default GetuserTodos;
+export default ShowTodos;
