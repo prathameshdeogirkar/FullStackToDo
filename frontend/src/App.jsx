@@ -6,6 +6,7 @@ import 'remixicon/fonts/remixicon.css'
 import Login from './components/Login'
 import UserIcon from './components/UserIcon'
 import { ToastContainer } from 'react-toastify';
+import ShowTask from './components/ShowTask'
 
 
 const App = () => {
@@ -18,6 +19,8 @@ const App = () => {
 
     <div className='flex '>
       <Mycalender />
+
+      <ShowTask />
 
 
       {
