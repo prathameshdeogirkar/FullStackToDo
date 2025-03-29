@@ -3,14 +3,19 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { loaddToken } from '../utiles.js';
 
-const GetuserTodos = ({ setShowcompo, userId }) => {
+const GetuserTodos = ({ setShowcompo }) => {
   const [tasks, setTasks] = useState([]);
-  const [token, setToken] = useState(loaddToken());
+  const token = loaddToken(); // Load user token
 
   useEffect(() => {
     const fetchTasks = async () => {
+      if (!token) {
+        toast("No token found, please log in");
+        return;
+      }
+
       try {
-        const response = await axios.get(`http://localhost:3000/getuserTodos?userId=${userId}`, {
+        const response = await axios.get('http://localhost:3000/getuserTodos', {
           headers: { authorization: `Bearer ${token}` },
         });
 
@@ -24,16 +29,16 @@ const GetuserTodos = ({ setShowcompo, userId }) => {
       }
     };
 
-    if (userId) fetchTasks();
-  }, [token, userId]); // Re-fetch when userId changes
+    fetchTasks();
+  }, [token]);
 
   return (
-    <div className='h-screen w-full bg-gray-100 p-5 flex flex-col'>
-      <h1 className='text-2xl font-bold text-center'>User's Tasks</h1>
+    <div className='h-full w-full p-5 bg-white shadow-md rounded-md'>
+      <h1 className='text-2xl font-bold text-center'>Your Tasks</h1>
       <div className='mt-4 flex flex-col gap-3 overflow-auto'>
         {tasks.length > 0 ? (
           tasks.map((task) => (
-            <div key={task._id} className='p-3 border border-gray-300 rounded bg-white shadow-md'>
+            <div key={task._id} className='p-3 border border-gray-300 rounded bg-gray-50 shadow-sm'>
               <h2 className='text-lg font-semibold'>{task.title}</h2>
               <p className='text-gray-600'>{task.description}</p>
             </div>
