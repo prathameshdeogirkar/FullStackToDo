@@ -17,44 +17,55 @@ const App = () => {
   const [showcompo, setShowcompo] = useState(false)
   const [authCompo, setAuthComp] = useState(token ? false : true)
   const [showcomponent, setShowcomponent] = useState(false);
- 
-  useEffect( () =>{
-    setToken(loaddToken())  
-  },[])
+  const [closeMsg, setcloseMsg] = useState(true)
+
+  useEffect(() => {
+    setToken(loaddToken())
+  }, [])
 
   console.log(token)
   return (
 
-    <div className='flex '>
-      <Mycalender
-         setShowcomponent = {setShowcomponent}
-         showcomponent = {showcomponent}
+    <>
+    {
+      closeMsg ? <div className='h-12 w-screen bg-green-500 flex items-center justify-between absolute  z-40 px-12 text-xl'>
+      <p>FOCUS ON YOUR GOALS</p>
+      <i className="ri-close-fill cursor-pointer" onClick={()=>setcloseMsg(false)}></i>
+    </div> : null
+    }
+      <div className='flex '>
+        <Mycalender
+          setShowcomponent={setShowcomponent}
+          showcomponent={showcomponent}
 
-      />
+        />
 
-      <ShowTask showcomponent={showcomponent}/>
+        <ShowTask showcomponent={showcomponent} />
 
 
-      <>
-        {
-          authCompo ? (
-            <>
-              {showcompo ? (
-                <Signup setShowcompo={setShowcompo} />
-              ) : (
-                <Login setShowcompo={setShowcompo} setAuthComp={setAuthComp} />
-              )}
-            </>
-          ) : null
-        }
-      </>
+        <>
+          {
+            authCompo ? (
+              <>
+                {showcompo ? (
+                  <Signup setShowcompo={setShowcompo} />
+                ) : (
+                  <Login setShowcompo={setShowcompo} setAuthComp={setAuthComp} />
+                )}
+              </>
+            ) : null
+          }
+        </>
 
-       <UserIcon />
+        <UserIcon />
 
-      <ToastContainer
-        position="bottom-left"
-      />
-    </div >
+        <ToastContainer
+          position="bottom-left"
+        />
+      </div >
+
+    </>
+
   )
 }
 

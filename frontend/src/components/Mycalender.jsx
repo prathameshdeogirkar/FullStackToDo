@@ -23,7 +23,7 @@ const MyCalendar = ({ showcomponent, setShowcomponent}) => {
   };
 
   return (
-    <div className="h-[100vh] w-[60vw] text-2xl bg-amber-300 border-4 border-black">
+    <div className="h-[92vh] w-[60vw] text-2xl bg-amber-300 border-4 border-black myShadow mt-6 ">
       <Calendar
         localizer={localizer}
         startAccessor="start"
