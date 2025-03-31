@@ -86,9 +86,9 @@ const updateTodoStatus = async (req, res) => {
 
 const getuserTodos = async (req, res) => {
     try {
-        const userId = req.user.id; 
+        const userId = req.user.userName; 
 
-        const user = await User.findById(userId).populate("myTodos");
+        const user = await User.findOne(userId).populate("myTodos");
 
         if (!user) {
             return responder(res, "User not found", null, 404, false);
