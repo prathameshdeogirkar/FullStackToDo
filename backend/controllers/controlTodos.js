@@ -3,33 +3,38 @@ import Todo from "../models/TodoModel.js"
 import User from "../models/UserModel.js"
 
 const addTodo = async (req, res) => {
-    console.log("hiii")
     try {
-        let { date, title, description, } = req.body;
-        const userId = req.user.id; 
+        let { date, title, description, userId} = req.body
 
-        if (!date || !title || !description ) {
+
+        if (!date || !title || !description || !userId) {
             return responder(res, "All fields are required", null, 400, false);
         }
 
-      
+        // Check if user exists
+        const user = await User.findById(userId);
+        if (!user) {
+            return responder(res, "User not found", null, 404, false);
+        }
+
+        // Create new Todo and link it to the user
         const newTodo = new Todo({ date, title, description, user: userId });
         const savedTodo = await newTodo.save();
 
         if (!savedTodo) {
-            return responder(res, "Something went wrong", null, 500, false);
+            return responder(res, "Failed to save Todo", null, 500, false);
         }
 
-       
-        await User.findByIdAndUpdate(userId, { $push: { myTodos: savedTodo._id } });
+        // Push the Todo ID to the user's `myTodos` array
+        User.myTodos.push(savedTodo._id);
+        await User.save();
 
         return responder(res, "Todo added successfully", savedTodo, 201, true);
     } catch (error) {
+        console.error("Error adding todo:", error);
         return responder(res, error.message, null, 500, false);
     }
-
-
-}
+};
 
 
 const deleteTodo = async (req, res) => {

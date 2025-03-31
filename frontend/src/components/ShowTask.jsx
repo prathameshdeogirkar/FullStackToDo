@@ -15,9 +15,11 @@ const ShowTodos = ({ setShowcompo }) => {
       }
 
       try {
-        const response = await axios.get('http://localhost:3000/getuserTodos', {
+        const response = await axios.get('http://localhost:3000/gettodos', {
           headers: { authorization: `Bearer ${token}` },
         });
+
+        console.log(response);
 
         if (response.data.success) {
           setTasks(response.data.data);
@@ -30,7 +32,7 @@ const ShowTodos = ({ setShowcompo }) => {
     };
 
     fetchTasks();
-  }, [token]);
+  }, []);
 
   return (
     <div className='h-full w-full p-5 bg-white shadow-md rounded-md'>
