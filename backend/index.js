@@ -16,7 +16,7 @@ import connectDb from "./config/connectDB.js"
 
 
 //controllers
- import {addTodo ,getuserTodos, deleteTodo} from "./controllers/controlTodos.js"
+ import {addTodo ,getuserTodos, deleteTodo,updateTodoStatus} from "./controllers/controlTodos.js"
  import { postSignUp , postLogin} from "./controllers/user.js"
 
 
@@ -60,7 +60,7 @@ app.post('/signup', postSignUp)
 app.post('/login', postLogin)
 app.get('/gettodos',jwtverifyMiddleware,getuserTodos)
 app.delete('/deletetodo/:id', deleteTodo)
-
+app.patch("/updateTodo/:id",updateTodoStatus);
 app.get("/health",(req,res)=>{
      responder(res,"server is healthy",null,200,true)
 })

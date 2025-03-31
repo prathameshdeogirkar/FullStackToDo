@@ -61,16 +61,16 @@ const deleteTodo = async (req, res) => {
 const updateTodoStatus = async (req, res) => {
     try {
         const { id } = req.params;
-        const userId = req.user.user_id;
+       
 
 
-        const todo = await Todo.findOne({ _id: id, user: userId });
+        const todo = await Todo.findOne({ _id: id});
         if (!todo) {
             return responder(res, "Todo not found or not authorized to update", null, 404, false);
         }
 
 
-        todo.status = !todo.status;
+        todo.completed = true;
         await todo.save();
 
         return responder(res, "Todo status updated successfully", todo, 200, true);
