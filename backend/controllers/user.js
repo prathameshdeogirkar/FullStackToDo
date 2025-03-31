@@ -29,21 +29,21 @@ const postSignUp = async(req,res)=>{
          return responder(res,err.message,null,500,false);
      }
     };
-const postLogin = (req, res)=>{
-    const {userName, password} = req.body;
+const postLogin = async (req, res)=>{
+    const {email, password} = req.body;
 
-    if(!userName || !password){
+    if(!email || !password){
          return  responder(res,'UserName and password required',null,403,false);
     }
 
-    const user =  User.findOne({userName});
+    const user =  await User.findOne({email});
 
     if(!user){
          return responder(res,'user not found please login',null,404,false);
     }
-    const isMatch =  bcrypt.compare(password, user.password);
+    const isMatch =  await bcrypt.compare(password, user.password);
     if(isMatch){
-        const token = jwt.sign({password: user.password,}, process.env.SECRET_KEY);
+        const token = await jwt.sign({user_id: user._id}, process.env.SECRET_KEY);
         res.setHeader("Authorization", `Bearer ${token}`);
         let userInfo = {
             userName: user.userName,
