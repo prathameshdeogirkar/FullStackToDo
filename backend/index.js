@@ -24,23 +24,30 @@ import connectDb from "./config/connectDB.js"
  app.use(express.json()) 
  app.use(express.urlencoded({extended:true}))
 
- const jwtverifyMiddleware = async(req, res , next) => {
-     const token = req.headers.authorization.split(" ")[1];
-     if (!token) {
-          return responder(res, 'jwt token is required', null, 401, false);
-     }
-     try {
-         const decoded = await jwt.verify(token, process.env.SECRET_KEY);
-         req.user = decoded; 
-         next();
-     }
-     catch (error) {
-             return res.status(401).json({
-             message: 'jwt token is invalid',
-             success: false
-         });
-     }
- }
+ const jwtverifyMiddleware = async (req, res, next) => {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+        return res.status(401).json({
+            message: 'JWT token is required',
+            success: false
+        });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    try {
+        const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        return res.status(401).json({
+            message: 'JWT token is invalid',
+            success: false
+        });
+    }
+};
+
  
 
 
@@ -51,28 +58,6 @@ app.post('/addtodo',jwtverifyMiddleware,addTodo)
 app.post('/signup', postSignUp)
 app.post('/login', postLogin)
 app.get('/gettodos',jwtverifyMiddleware,getuserTodos)
-app.get('/test', (req, res) => {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    } 
-
-    const tokenValue = token.split(' ')[1] ;
-    try{
-    const decoded = jwt.verify(tokenValue, process.env.SECRET_KEY);
-
-    if(decoded){
-       return res.json({
-            message: 'Authorized',
-            success: true,
-            data: decoded
-        })
-    }}
-    catch(err){
-    return res.status(401).json({ message: 'Unauthorized' });
-    }
-})
-
 
 app.get("/health",(req,res)=>{
      responder(res,"server is healthy",null,200,true)
