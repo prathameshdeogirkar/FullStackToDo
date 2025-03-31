@@ -12,7 +12,7 @@ const Login = ({setShowcompo,setAuthComp}) => {
   
 
   const handleLogin = async ()=>{
-
+    console.log(email, password)
      try {
         let  response = await axios.post(`http://localhost:3000/login`,{
           email,
@@ -29,6 +29,7 @@ const Login = ({setShowcompo,setAuthComp}) => {
           localStorage.setItem('allInfo',JSON.stringify(response.data?.data))
           setShowcompo(false)
           setAuthComp(false)
+          window.location.reload()
         }
      } catch (error) {
      }
@@ -43,7 +44,7 @@ const Login = ({setShowcompo,setAuthComp}) => {
           <h1 className='text-4xl font-bold text-center mt-3 mainFont'>Login</h1>
 
           <div className='h-14 w-[70%]'>
-            <Appinput name="userName" placeholder="Enter username" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+            <Appinput name="userName" placeholder="Enter Email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
           </div>
 
           <div className='h-14 w-[70%]'>
