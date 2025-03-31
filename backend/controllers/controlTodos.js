@@ -41,23 +41,14 @@ const addTodo = async (req, res) => {
 const deleteTodo = async (req, res) => {
     try {
         const { id } = req.params;
-        const userId = req.user.id;
+        console.log(id);
 
         if (!id) {
             return responder(res, "Todo ID is required", null, 400, false);
         }
 
 
-        const todo = await Todo.findOne({ _id: id, user: userId });
-        if (!todo) {
-            return responder(res, "Todo not found or not authorized to delete", null, 404, false);
-        }
-
-
         await Todo.findByIdAndDelete(id);
-
-
-        await User.findByIdAndUpdate(userId, { $pull: { myTodos: id } });
 
         return responder(res, "Todo deleted successfully", null, 200, true);
     } catch (error) {
