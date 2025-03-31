@@ -22,7 +22,6 @@ const Addtask = ({ startdate,setShowcompo }) => {
 
     console.log(taskinfo)
     try {
-
       const response = await axios.post('http://localhost:3000/addtodo', { 
         date: taskinfo.date, 
         title: taskinfo.title, 

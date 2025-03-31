@@ -24,34 +24,34 @@ const postSignUp = async(req,res)=>{
         });
         const savedUser = await newUser.save()
 
-        return responder(res,'User created successfully',null,201,true);
+        return responder(res,'User created successfully',{newUser},201,true);
      } catch(err){
          return responder(res,err.message,null,500,false);
      }
     };
-const postLogin = async(req,res)=>{
+const postLogin = async (req, res)=>{
     const {email, password} = req.body;
 
-    if(!email ||!password  ){
-         return  responder(res,'email pass required',null,403,false);
+    if(!email || !password){
+         return  responder(res,'UserName and password required',null,403,false);
     }
 
-    const user = await User.findOne({email});
+    const user =  await User.findOne({email});
 
     if(!user){
-         return responder(res,'user not found please login ',null,404,false);
+         return responder(res,'user not found please login',null,404,false);
     }
-    const isMatch = bcrypt.compareSync(password, user.password);
+    const isMatch =  await bcrypt.compare(password, user.password);
     if(isMatch){
-        const token = jwt.sign({email: user.email}, process.env.SECRET_KEY);
+        const token = await jwt.sign({user_id: user._id}, process.env.SECRET_KEY);
         res.setHeader("Authorization", `Bearer ${token}`);
         let userInfo = {
             userName: user.userName,
             email: user.email,
             _id: user._id
-        }
+        };
         return responder(res, 'User logged in successfully',{token,userInfo},200,true);
-            }
+        }
                else{
                 return responder(res,'Invalid credentials',null,403,false);
  

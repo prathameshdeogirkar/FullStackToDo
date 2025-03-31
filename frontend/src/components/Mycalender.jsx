@@ -7,9 +7,9 @@ import Addtask from './Addtask';
 
 const localizer = dayjsLocalizer(dayjs);
 
-const MyCalendar = () => {
+const MyCalendar = ({ showcomponent, setShowcomponent}) => {
+
   const [events, setEvents] = useState([]); 
-  const [showcompo, setShowcompo] = useState(false);
   const [startdate, setStartdate] = useState('');
 
   const handleSelectSlot = ({ start }) => {
@@ -19,7 +19,7 @@ const MyCalendar = () => {
     console.log('Selected Date:', formattedDate);
     setStartdate(formattedDate);
 
-    setShowcompo(true); 
+    setShowcomponent(true); 
   };
 
   return (
@@ -34,15 +34,15 @@ const MyCalendar = () => {
         onSelectSlot={handleSelectSlot}
         
         
-        className="rbc-calendar"
+        className="rbc-calendar  "
         components={{
           toolbar: () => null, 
         }}
       />
 
-      {showcompo && (
+      {showcomponent && (
         <Addtask
-          setShowcompo={setShowcompo}
+          setShowcompo={setShowcomponent}
           setEvents={setEvents}
           events={events}
           startdate={startdate}

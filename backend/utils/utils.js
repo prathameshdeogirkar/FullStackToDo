@@ -8,4 +8,5 @@ const responder=(res,message="all ohkk",data=null,status=200,success=true)=>{
 }
 
 
+
 export default responder;
