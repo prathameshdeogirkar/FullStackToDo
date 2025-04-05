@@ -6,6 +6,8 @@ import Appbtn from './Appbtn.jsx';
 
 import empty from "./../assets/empty.png"
 
+const API = import.meta.env.VITE_APP_URL
+
 const ShowTodos = ({ setShowcompo, showcomponent }) => {
   const [tasks, setTasks] = useState([]);
   const token = loaddToken(); 
@@ -14,7 +16,7 @@ const ShowTodos = ({ setShowcompo, showcomponent }) => {
 
   const fetchTask = async()=>{
     try{
-        const response = await axios.get('http://localhost:3000/gettodos', { headers: { Authorization: `Bearer ${token}` } });
+        const response = await axios.get(`${API}/gettodos`, { headers: { Authorization: `Bearer ${token}` } });
         setTasks(response.data.data);
       } catch (error) {
         console.log(error);
@@ -35,7 +37,7 @@ useEffect(() => {
 
 const deleteTask = async (id)=>{
   try {
-    const response = await axios.delete(`http://localhost:3000/deletetodo/${id}`)
+    const response = await axios.delete(`${API}/deletetodo/${id}`)
 
     setDelete(response)
   } catch (error) {

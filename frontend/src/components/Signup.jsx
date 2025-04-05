@@ -4,6 +4,9 @@ import Appbtn from './Appbtn'
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
+const API = import.meta.env.VITE_APP_URL
+
+
 
 const Signup = ({setShowcompo}) => {
 
@@ -21,7 +24,7 @@ const Signup = ({setShowcompo}) => {
         toast('All fields are required')
         return
       }
-      const response =await axios.post('http://localhost:3000/signup', { userName: userinfo.userName, email: userinfo.email, password: userinfo.password })
+      const response =await axios.post(`${API}/signup`, { userName: userinfo.userName, email: userinfo.email, password: userinfo.password })
 
       console.log(response.data)
       if (response.data.success) {
@@ -39,7 +42,7 @@ const Signup = ({setShowcompo}) => {
 
   }
 
-
+console.log(API);
 
   return (
     <div className='h-screen w-screen absolute top-0 left-0 backdrop-blur-2xl z-30 flex items-center justify-center'>
