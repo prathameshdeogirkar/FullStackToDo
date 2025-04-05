@@ -52,7 +52,7 @@ const deleteTask = async (id)=>{
 const updateStatus =async (id)=>{
   
   try {
-    const response = await axios.patch(`http://localhost:3000/updateTodo/${id}`)
+    const response = await axios.patch(`${API}/updateTodo/${id}`)
 
     setDelete(response)
   } catch (error) {
