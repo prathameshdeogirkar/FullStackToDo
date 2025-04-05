@@ -17,7 +17,7 @@ const UserIcon = () => {
        <div className='h-[40px] w-[40px] ml-2 rounded-full bg-black border-2 border-black'>
         <img src={userimg} className='h-full w-full object-cover' ></img>
        </div>
-       <span className='text-xl font-bold ml-2'>{getCurrentUser()?.userName }</span>
+       <span className='text-xl font-bold ml-2'>{getCurrentUser()?.userName.split(" ")?.[0] }</span>
         <i className="ri-arrow-down-s-line"></i>
     </div>
     {showLogout && <div className='h-12 w-44 bg-red-300 myShadow absolute right-2 top-16 flex  items-center cursor-pointer overflow-hidden justify-center' onClick={handleLogout}>

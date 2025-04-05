@@ -5,19 +5,23 @@ import { loaddToken } from '../utiles.js';
 import Appbtn from './Appbtn.jsx';
 
 import empty from "./../assets/empty.png"
+import { updateTodoStatus } from '../../../backend/controllers/controlTodos.js';
 
 const API = import.meta.env.VITE_APP_URL
 
 const ShowTodos = ({ setShowcompo, showcomponent }) => {
+
   const [tasks, setTasks] = useState([]);
   const token = loaddToken(); 
 
   const [Delete, setDelete] = useState({})
 
   const fetchTask = async()=>{
+    
     try{
         const response = await axios.get(`${API}/gettodos`, { headers: { Authorization: `Bearer ${token}` } });
         setTasks(response.data.data);
+        console.log(response.data.data)
       } catch (error) {
         console.log(error);
     }
@@ -44,6 +48,17 @@ const deleteTask = async (id)=>{
     
   }
 }
+
+const updateStatus =async (id)=>{
+  
+  try {
+    const response = await axios.patch(`http://localhost:3000/updateTodo/${id}`)
+
+    setDelete(response)
+  } catch (error) {
+    
+  }
+}
 useEffect(() => {
   console.log('Component mounted');
   fetchTask();
@@ -52,22 +67,25 @@ useEffect(() => {
 
   return (
     <div className='h-screen w-[40vw] p-5  overflow-y-scroll overflow-x-hidden'>
-      <div className='mt-4 flex flex-col gap-6'>
+      <div className='mt-10 flex flex-col gap-6 '>
         {tasks?.length > 0 ? (
           tasks.map((task) => (
-            <div key={task._id} className={`myShadow p-4 ${task.completed ? 'bg-green-300': 'bg-blue-300'}`}>
+            <div key={task._id} className={`myShadow p-4 relative ${task.completed ? 'bg-green-300': 'bg-blue-300'}`}>
+              
               <h2 className=' font-serif text-3xl'>{task.title}</h2>
               <p className='text-gray-600'>{task.description}</p>
               <div className='flex gap-4 h-11 my-4 ' >
                 <Appbtn 
                 veriant='simple_Green' 
-                title='Done' 
+                title={`${task.completed ? 'achieved' : 'unachieved' }`} 
+                onClick={()=>updateStatus(task._id)}
                />
                 <Appbtn
                 veriant='simple_Red'
                 title='Delete'
                 onClick={()=> deleteTask(task._id)}/>
               </div>
+              <span className='absolute right-0 top-0 p-4 font-bold '> {task.date}</span>
             </div>
           ))
         ) : (
