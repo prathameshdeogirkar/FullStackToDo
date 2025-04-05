@@ -6,7 +6,7 @@ dotenv.config()
 import jwt from "jsonwebtoken";
 import cors from "cors"
 app.use(cors({
-    origin: "*"
+    origin: "https://fullstacktodooo.netlify.app/"
 }))
 
 //configs and utils 
