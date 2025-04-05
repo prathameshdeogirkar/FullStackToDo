@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import Appinput from './Appinput';
 import Appbtn from './Appbtn';
 
+const API = import.meta.env.VITE_APP_URL
+
 const Login = ({setShowcompo,setAuthComp}) => {
 
   const [email,setEmail] = useState('');
@@ -14,7 +16,7 @@ const Login = ({setShowcompo,setAuthComp}) => {
   const handleLogin = async ()=>{
     console.log(email, password)
      try {
-        let  response = await axios.post(`http://localhost:3000/login`,{
+        let  response = await axios.post(`${API}/login`,{
           email,
           password
         })
